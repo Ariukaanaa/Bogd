@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <title>Багшийн самбар</title>
+</head>
+<body>
+  <h2>📋 Багшийн самбар <span id="welcome"></span></h2>
+
+  <section>
+    <h3>🧑‍🎓 Ирц бүртгэх</h3>
+    <table>
+      <thead>
+        <tr><th>Нэр</th><th>Ирсэн</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Бат-Эрдэнэ</td><td><input type="checkbox" class="attendance" data-name="Бат-Эрдэнэ"></td></tr>
+        <tr><td>Сараа</td><td><input type="checkbox" class="attendance" data-name="Сараа"></td></tr>
+      </tbody>
+    </table>
+    <button onclick="saveAttendance()">Ирц хадгалах</button>
+  </section>
+
+  <section>
+    <h3>📚 Дүн оруулах</h3>
+    <table>
+      <thead>
+        <tr><th>Нэр</th><th>Хичээл</th><th>Дүн</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Бат-Эрдэнэ</td><td>Математик</td><td><input type="number" class="grade" data-name="Бат-Эрдэнэ" data-subject="Математик"></td></tr>
+        <tr><td>Сараа</td><td>Англи хэл</td><td><input type="number" class="grade" data-name="Сараа" data-subject="Англи хэл"></td></tr>
+      </tbody>
+    </table>
+    <button onclick="saveGrades()">Дүн хадгалах</button>
+  </section>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || user.role !== "teacher") {
+      alert("Хандах эрх байхгүй!");
+      window.location.href = "login.html";
+    } else {
+      document.getElementById("welcome").textContent = "Нэр: " + user.name;
+    }
+
+    window.onload = function() {
+      const attendanceData = JSON.parse(localStorage.getItem("attendance")) || {};
+      document.querySelectorAll(".attendance").forEach(item => {
+        item.checked = attendanceData[item.dataset.name] === "Ирсэн";
+      });
+
+      const gradesData = JSON.parse(localStorage.getItem("grades")) || {};
+      document.querySelectorAll(".grade").forEach(item => {
+        const key = item.dataset.name + "-" + item.dataset.subject;
+        item.value = gradesData[key] || "";
+      });
+    };
+
+    function saveAttendance() {
+      const attendances = {};
+      document.querySelectorAll(".attendance").forEach(item => {
+        attendances[item.dataset.name] = item.checked ? "Ирсэн" : "Ирээгүй";
+      });
+      localStorage.setItem("attendance", JSON.stringify(attendances));
+      alert("Ирц хадгалагдлаа");
+    }
+
+    function saveGrades() {
+      const grades = {};
+      document.querySelectorAll(".grade").forEach(item => {
+        const key = item.dataset.name + "-" + item.dataset.subject;
+        grades[key] = item.value;
+      });
+      localStorage.setItem("grades", JSON.stringify(grades));
+      alert("Дүн хадгалагдлаа");
+    }
+  </script>
+</body>
+</html>

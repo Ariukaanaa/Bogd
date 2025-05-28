@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <title>Сурагчийн самбар</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard">
+    <h2>👩‍🎓 Сурагчийн самбар</h2>
+
+    <!-- Ирц -->
+    <section>
+      <h3>🗓 Ирцийн мэдээлэл</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Огноо</th>
+            <th>Төлөв</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2025-05-27</td>
+            <td>Ирсэн</td>
+          </tr>
+          <tr>
+            <td>2025-05-26</td>
+            <td>Ирээгүй</td>
+          </tr>
+          <!-- Илүү олон өдөр нэмэж болно -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Дүн -->
+    <section>
+      <h3>📘 Хичээлийн дүн</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Хичээл</th>
+            <th>Дүн</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Математик</td>
+            <td>87</td>
+          </tr>
+          <tr>
+            <td>Англи хэл</td>
+            <td>92</td>
+          </tr>
+          <!-- Бусад хичээлүүд -->
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+
+     <script>
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user || user.role !== "student") {
+        alert("Хандах эрх байхгүй!");
+        window.location.href = "login.html";
+    } else {
+        document.getElementById("studentName").textContent = "Сурагч: " + user.name;
+
+        // Дүн, ирцийг user.grades, user.attendance-аас авч болно
+    }
+    </script>
+</body>
+</html>
